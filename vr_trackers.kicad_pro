@@ -624,7 +624,7 @@
       "plot": "",
       "pos_files": "",
       "specctra_dsn": "",
-      "step": "",
+      "step": "vr_trackers.step",
       "svg": "",
       "vrml": ""
     },
