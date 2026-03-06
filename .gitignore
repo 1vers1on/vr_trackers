@@ -39,3 +39,12 @@ fp-info-cache
 # Local project settings
 *.kicad_prl
 .DS_Store
+
+zephyr
+tools
+test 
+nrf
+nrfxlib
+modules
+bootloader
+.west
