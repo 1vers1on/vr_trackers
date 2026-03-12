@@ -1,0 +1,6 @@
+board:
+  name: vr_trackers
+  full_name: Ellie VR Trackers
+  vendor: ellie
+  socs:
+    - name: nrf52840

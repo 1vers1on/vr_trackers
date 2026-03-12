@@ -48,3 +48,8 @@ nrfxlib
 modules
 bootloader
 .west
+
+fabrication-toolkit-options.json
+production
+compile_commands.json
+.vscode

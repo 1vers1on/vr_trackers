@@ -1,0 +1,20 @@
+identifier: vr_trackers/nrf52840
+name: Ellie VR Trackers
+type: mcu
+arch: arm
+ram: 256
+flash: 1024
+toolchain:
+  - zephyr
+  - gnuarmemb
+supported:
+  - adc
+  - usbd
+  - ble
+  - pwm
+  - spi
+  - watchdog
+  - counter
+  - netif:openthread
+  - gpio
+vendor: ellie
