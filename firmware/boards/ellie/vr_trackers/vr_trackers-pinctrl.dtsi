@@ -30,4 +30,26 @@
 			low-power-enable;
 		};
 	};
+
+	i2s0_default: i2s0_default {
+		group1 {
+				// there are unused pins because im using ws2812 over i2s with a
+				// trick to only use the SDOUT line, but they still need to 
+				// be configured for the peripheral to work
+			psels = <NRF_PSEL(I2S_SDOUT, 1, 2)>,
+				<NRF_PSEL(I2S_SDIN, 1, 5)>,
+				<NRF_PSEL(I2S_SCK_M, 1, 6)>,
+				<NRF_PSEL(I2S_LRCK_M, 1, 7)>;
+		};
+	};
+
+	i2s0_sleep: i2s0_sleep {
+		group1 {
+			psels = <NRF_PSEL(I2S_SDOUT, 1, 2)>,
+				<NRF_PSEL(I2S_SDIN, 1, 5)>,
+				<NRF_PSEL(I2S_SCK_M, 1, 6)>,
+				<NRF_PSEL(I2S_LRCK_M, 1, 7)>;
+			low-power-enable;
+		};
+	};
 };

@@ -1,3 +1,4 @@
+#include <stdint.h>
 #include <zephyr/kernel.h>
 #include <zephyr/device.h>
 #include <zephyr/devicetree.h>
@@ -5,41 +6,51 @@
 #include <zephyr/drivers/sensor.h>
 #include <zephyr/drivers/i2c.h>
 #include <zephyr/drivers/spi.h>
-#include <esb.h>
+#include <zephyr/logging/log.h>
 
-const struct device *const mag_dev = DEVICE_DT_GET(DT_NODELABEL(bmm350));
-const struct device *const imu_dev = DEVICE_DT_GET(DT_NODELABEL(lsm6dsv));
-const struct gpio_dt_spec button = GPIO_DT_SPEC_GET(DT_NODELABEL(button0), gpios);
+#include "hardware/magnetometer.h"
+#include "hardware/imu.h"
+#include "hardware/button.h"
 
-void init_magnetometer(void) {
-    if (!device_is_ready(mag_dev)) {
-        printk("BMM350 device not ready\n");
-        return;
+LOG_MODULE_REGISTER(main, LOG_LEVEL_DBG);
+
+static const struct device *const fuel_dev = DEVICE_DT_GET(DT_NODELABEL(max17048));
+static const struct gpio_dt_spec charger_status = GPIO_DT_SPEC_GET(DT_NODELABEL(charger_stat), gpios);
+
+static int init_fuel_gauge(void) {
+    LOG_INF("Initializing fuel gauge");
+    if (!device_is_ready(fuel_dev)) {
+        LOG_ERR("MAX17048 device not ready");
+        return -ENODEV;
     }
+    LOG_INF("Fuel gauge initialized successfully");
+    return 0;
 }
 
-void init_imu(void) {
-    if (!device_is_ready(imu_dev)) {
-        printk("LSM6DSV device not ready\n");
-        return;
+static int init_charger_status(void) {
+    LOG_INF("Initializing charger status GPIO");
+    if (!gpio_is_ready_dt(&charger_status)) {
+        LOG_ERR("Charger status GPIO device not ready");
+        return -ENODEV;
     }
-}
-
-void init_button(void) {
-    if (!gpio_is_ready_dt(&button)) {
-        return;
+    int ret = gpio_pin_configure_dt(&charger_status, GPIO_INPUT);
+    if (ret < 0) {
+        LOG_ERR("Failed to configure charger status GPIO pin");
+        return ret;
     }
-
-    gpio_pin_configure_dt(&button, GPIO_INPUT);
+    LOG_INF("Charger status GPIO initialized successfully");
+    return 0;
 }
 
 int main() {
-    init_magnetometer();
     init_imu();
+    init_magnetometer();
+    init_fuel_gauge();
     init_button();
+    init_charger_status();
 
     while (1) {
-        printk("Hello, Zephyr!\n");
+        LOG_INF("Hello, Zephyr!");
         k_sleep(K_SECONDS(1));
     }
 }

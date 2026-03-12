@@ -1,7 +1,8 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-extern const struct device *const mag_dev;
-extern const struct device *const imu_dev;
+extern const struct device *const fuel_dev;
+
+#define BUTTON_DEBOUNCE_MS 50
 
 #endif // CONFIG_H
