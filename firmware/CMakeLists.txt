@@ -10,4 +10,6 @@ target_include_directories(app PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 target_sources(app PRIVATE src/main.c
                            src/hardware/imu.c
                            src/hardware/magnetometer.c
-                           src/hardware/button.c)
+                           src/hardware/button.c
+                           src/hardware/esb.c
+                           src/hardware/usb.c)

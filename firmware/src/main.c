@@ -11,6 +11,7 @@
 #include "hardware/magnetometer.h"
 #include "hardware/imu.h"
 #include "hardware/button.h"
+#include "hardware/usb.h"
 
 LOG_MODULE_REGISTER(main, LOG_LEVEL_DBG);
 
@@ -48,6 +49,7 @@ int main() {
     init_fuel_gauge();
     init_button();
     init_charger_status();
+    init_usb();
 
     while (1) {
         LOG_INF("Hello, Zephyr!");
