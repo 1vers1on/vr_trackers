@@ -120,12 +120,12 @@
 &usbd {
     compatible = "nordic,nrf-usbd";
     status = "okay";
-    usb_hid_0: usb_hid_0 {
-        compatible = "zephyr,usb-hid-device";
-        interface-name = "TrackEllie";
-        protocol-code = <0>;
-        subclass-code = <0>;
-        report-interval = <1>;
-        status = "okay";
+
+    hid_dev_0: hid_dev_0 {
+        compatible = "zephyr,hid-device";
+		label = "HID0";
+		protocol-code = "none";
+		in-polling-period-us = <1000>;
+		in-report-size = <64>;
     };
 };
